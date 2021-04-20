@@ -9,6 +9,7 @@ const FormCard = ({
   dateFormatter,
   alignText,
   card,
+  submit,
 }) => {
   return (
     <div className={card} style={{ width: "18rem" }}>
@@ -57,7 +58,7 @@ const FormCard = ({
             />
           </li>
           <li className="list-group-item">
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" onClick={submit} />
           </li>
         </ul>
       </form>

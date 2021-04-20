@@ -1,9 +1,23 @@
-import { incomeData } from "./incomeData";
+import { useEffect, useState } from "react";
+
 const IncomeLog = () => {
-  const sortedActivities = incomeData
-    .slice()
-    .sort((a, b) => (b.date > a.date ? 1 : -1));
-  console.log(sortedActivities.reverse());
+  // const sortedActivities = incomeData
+  //   .slice()
+  //   .sort((a, b) => (b.date > a.date ? 1 : -1));
+  // const sortedActivities = incomeData.sort(function (a, b) {
+  //   var aa = a.date.split("/").reverse().join(),
+  //     bb = b.date.split("/").reverse().join();
+  //   return aa < bb ? -1 : aa > bb ? 1 : 0;
+  // });
+  // console.log(sortedActivities.reverse());
+  const [incomeData, setIncomeData] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3001/income_log")
+      .then((res) => res.json())
+      .then((data) => {
+        setIncomeData(data);
+      });
+  }, []);
   return (
     <>
       <h1>IncomeLog</h1>
@@ -15,11 +29,11 @@ const IncomeLog = () => {
           </tr>
         </thead>
         <tbody>
-          {sortedActivities.map((_, i) => {
+          {incomeData.map((_, i) => {
             return (
-              <tr>
-                <td>{sortedActivities[i].date}</td>
-                <td>{sortedActivities[i].income}</td>
+              <tr key={[i]}>
+                <td>{incomeData[i].income_date}</td>
+                <td>{incomeData[i].total_income}</td>
               </tr>
             );
           })}
