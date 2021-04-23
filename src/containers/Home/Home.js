@@ -17,18 +17,27 @@ const Home = () => {
       setStartDate(date);
     }
   };
-  const submitIncome = () => {
-    fetch("http://localhost:3001/income_log", {
+  const submitIncome = (e) => {
+    e.preventDefault();
+
+    fetch("http://localhost:3002/income_log", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         date: incomeDate,
         total_income: totalIncome,
       }),
-    });
+    })
+      .then((res) => res.json())
+      .then((message) => {
+        if (message !== "post spending data success") {
+          alert("FAILED");
+        }
+      });
   };
-  const submitSpending = () => {
-    fetch("http://localhost:3001/spending_log", {
+  const submitSpending = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:3002/spending_log", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
