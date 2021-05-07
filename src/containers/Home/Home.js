@@ -19,7 +19,10 @@ const Home = () => {
   };
   const submitIncome = (e) => {
     e.preventDefault();
-
+    console.log(incomeDate, totalIncome);
+    if (incomeDate || totalIncome === "") {
+      return alert("please fill the input");
+    }
     fetch("http://localhost:3002/income_log", {
       method: "post",
       headers: { "Content-Type": "application/json" },
@@ -37,6 +40,14 @@ const Home = () => {
   };
   const submitSpending = (e) => {
     e.preventDefault();
+    if (
+      spendingDate ||
+      totalPriceSpended ||
+      spendingItem ||
+      totalSpendingItem === ""
+    ) {
+      return alert("please fill the input");
+    }
     fetch("http://localhost:3002/spending_log", {
       method: "post",
       headers: { "Content-Type": "application/json" },
