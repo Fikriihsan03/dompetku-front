@@ -12,23 +12,23 @@ const SpendingLog = () => {
   return (
     <>
       <h1>SpendingLog</h1>
-      <table style={{ textAlign: "center", border: "2px solid black" }}>
-        <thead>
-          <tr>
-            <td>Date</td>
-            <td>Item Name</td>
-            <td>Total Item</td>
-            <td>Total Spending</td>
+      <table style={{ textAlign: "center" }} className="row">
+        <thead style={{ border: "1px solid black", fontSize: "20px" }}>
+          <tr className="row">
+            <td className="col-sm-3">Date</td>
+            <td className="col-sm-3">Item Name</td>
+            <td className="col-sm-3">Total Item</td>
+            <td className="col-sm-3">Total Spending</td>
           </tr>
         </thead>
         <tbody>
           {spendingData.map((_, i) => {
             return (
-              <tr key={[i]}>
-                <td>{spendingData[i].spending_date}</td>
-                <td>{spendingData[i].item_name}</td>
-                <td>{spendingData[i].total_items}</td>
-                <td>{spendingData[i].total_spendings}</td>
+              <tr key={[i]} className="row">
+                <td className="col-sm-3">{spendingData[i].spending_date}</td>
+                <td className="col-sm-3">{spendingData[i].item_name}</td>
+                <td className="col-sm-3">{spendingData[i].total_items}</td>
+                <td className="col-sm-3">{spendingData[i].total_spendings}</td>
               </tr>
             );
           })}
