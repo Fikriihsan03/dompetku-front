@@ -19,8 +19,8 @@ const Home = () => {
   };
   const submitIncome = (e) => {
     e.preventDefault();
-    console.log(incomeDate, totalIncome);
-    if (incomeDate === "" || totalIncome === "") {
+    console.log(incomeDate, moneyIncome);
+    if (incomeDate === "" || moneyIncome === "") {
       return alert("please fill the input");
     }
     fetch("http://localhost:3002/income_log", {
@@ -28,21 +28,16 @@ const Home = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         date: incomeDate,
-        total_income: totalIncome,
+        money_income: moneyIncome,
       }),
-    })
-      .then((res) => res.json())
-      .then((message) => {
-        if (message !== "post spending data success") {
-          alert("FAILED");
-        }
-      });
+    });
+    setMoneyIncome("");
   };
   const submitSpending = (e) => {
     e.preventDefault();
     if (
       spendingDate === "" ||
-      totalPriceSpended === "" ||
+      moneySpended === "" ||
       spendingItem === "" ||
       totalSpendingItem === ""
     ) {
@@ -53,33 +48,42 @@ const Home = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         date: spendingDate,
-        total_spendings: totalPriceSpended,
+        money_spended: moneySpended,
         item_name: spendingItem,
         total_items: totalSpendingItem,
       }),
     });
+    setSpendingDate("");
+    setTotalMoneySpended("");
+    setSpendingItem("");
+    setTotalSpendingItem("");
   };
   //-----------state---------
   const [showForm, setShowForm] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalSpending, setTotalSpending] = useState(0);
   const [incomeDate, setIncomeDate] = useState("");
   const [spendingDate, setSpendingDate] = useState("");
   const [spendingItem, setSpendingItem] = useState("");
   const [totalSpendingItem, setTotalSpendingItem] = useState("");
-  const [totalPriceSpended, setTotalPriceSpended] = useState("");
-  const [totalIncome, setTotalIncome] = useState("");
+  const [moneySpended, setTotalMoneySpended] = useState("");
+  const [moneyIncome, setMoneyIncome] = useState("");
   //-----END-------
   let form = (
     <FormCard
       dateFormatter={dateFormatter}
+      spendingItem={spendingItem}
       setSpendingItem={setSpendingItem}
+      totalSpendingItem={totalSpendingItem}
       setTotalSpendingItem={setTotalSpendingItem}
-      setTotalPriceSpended={setTotalPriceSpended}
+      moneySpended={moneySpended}
+      setTotalMoneySpended={setTotalMoneySpended}
       startDate={startDate}
       setStartDate={setStartDate}
+      submit={submitSpending}
       alignText={classes.AlignTextCenter}
       card={classes.Card}
-      submit={submitSpending}
       dateText={classes.DateText}
     />
   );
@@ -110,7 +114,8 @@ const Home = () => {
                 thousandSeparator={"."}
                 decimalSeparator={","}
                 prefix={"Rp."}
-                onChange={(e) => setTotalIncome(e.target.value)}
+                value={moneyIncome}
+                onChange={(e) => setMoneyIncome(e.target.value)}
               />
             </li>
             <li className="list-group-item">

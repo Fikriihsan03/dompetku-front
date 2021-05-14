@@ -9,6 +9,15 @@ const IncomeLog = () => {
         setIncomeData(data);
       });
   }, []);
+  const parsedTotalIncome = incomeData.map((ha, i) => {
+    return Number(incomeData[i].money_income.split(".").splice(1, 2).join(""));
+  });
+  const result = parsedTotalIncome.reduce((sum, number) => {
+    let result = sum + number;
+    return result;
+  }, 0);
+
+  console.log(result);
   return (
     <>
       <h1>IncomeLog</h1>
@@ -28,7 +37,7 @@ const IncomeLog = () => {
                   {incomeData[i].income_date}
                 </td>
                 <td className="col-sm-6 col-xs-6" style={{ marginTop: "10px" }}>
-                  {incomeData[i].total_income}
+                  {incomeData[i].money_income}
                 </td>
               </tr>
             );

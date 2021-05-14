@@ -2,9 +2,12 @@ import NumberFormat from "react-number-format";
 import DatePicker from "react-datepicker";
 
 const FormCard = ({
+  spendingItem,
   setSpendingItem,
+  totalSpendingItem,
   setTotalSpendingItem,
-  setTotalPriceSpended,
+  moneySpended,
+  setTotalMoneySpended,
   startDate,
   dateFormatter,
   alignText,
@@ -36,6 +39,7 @@ const FormCard = ({
               type="text"
               name="item-name"
               className={alignText}
+              value={spendingItem}
               onChange={(e) => setSpendingItem(e.target.value)}
             />
           </li>
@@ -45,18 +49,20 @@ const FormCard = ({
               type="text"
               name="total-item"
               className={alignText}
+              value={totalSpendingItem}
               onChange={(e) => setTotalSpendingItem(e.target.value)}
             />
           </li>
           <li className="list-group-item">
             <label htmlFor="total-price">Total Price : </label>
             <NumberFormat
+              value={moneySpended}
               name="total-price"
               className={alignText}
               thousandSeparator={"."}
               decimalSeparator={","}
               prefix={"Rp."}
-              onChange={(e) => setTotalPriceSpended(e.target.value)}
+              onChange={(e) => setTotalMoneySpended(e.target.value)}
             />
           </li>
           <li className="list-group-item">

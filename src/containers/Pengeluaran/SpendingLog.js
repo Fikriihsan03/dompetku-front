@@ -28,7 +28,7 @@ const SpendingLog = () => {
                 <td className="col-sm-3">{spendingData[i].spending_date}</td>
                 <td className="col-sm-3">{spendingData[i].item_name}</td>
                 <td className="col-sm-3">{spendingData[i].total_items}</td>
-                <td className="col-sm-3">{spendingData[i].total_spendings}</td>
+                <td className="col-sm-3">{spendingData[i].money_spended}</td>
               </tr>
             );
           })}
