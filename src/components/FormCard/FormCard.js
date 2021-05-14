@@ -10,6 +10,7 @@ const FormCard = ({
   alignText,
   card,
   submit,
+  dateText,
 }) => {
   return (
     <div className={card} style={{ width: "18rem" }}>
@@ -23,6 +24,7 @@ const FormCard = ({
             <label htmlFor="tanggal">Tanggal: </label>
             <DatePicker
               name="tanggal"
+              className={dateText}
               dateFormat="dd/MM/YYY"
               selected={startDate}
               onChange={(date) => dateFormatter(date, "spending")}

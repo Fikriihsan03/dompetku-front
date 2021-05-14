@@ -20,7 +20,7 @@ const Home = () => {
   const submitIncome = (e) => {
     e.preventDefault();
     console.log(incomeDate, totalIncome);
-    if (incomeDate || totalIncome === "") {
+    if (incomeDate === "" || totalIncome === "") {
       return alert("please fill the input");
     }
     fetch("http://localhost:3002/income_log", {
@@ -41,9 +41,9 @@ const Home = () => {
   const submitSpending = (e) => {
     e.preventDefault();
     if (
-      spendingDate ||
-      totalPriceSpended ||
-      spendingItem ||
+      spendingDate === "" ||
+      totalPriceSpended === "" ||
+      spendingItem === "" ||
       totalSpendingItem === ""
     ) {
       return alert("please fill the input");
@@ -80,6 +80,7 @@ const Home = () => {
       alignText={classes.AlignTextCenter}
       card={classes.Card}
       submit={submitSpending}
+      dateText={classes.DateText}
     />
   );
   if (showForm) {
@@ -95,6 +96,7 @@ const Home = () => {
               <label htmlFor="tanggal">Tanggal: </label>
               <DatePicker
                 name="tanggal"
+                className={classes.DateText}
                 dateFormat="dd/MM/YYY"
                 selected={startDate}
                 onChange={(date) => dateFormatter(date, "income")}

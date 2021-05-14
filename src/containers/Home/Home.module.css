@@ -1,6 +1,9 @@
 .App {
   text-align: center;
 }
+.DateText {
+  text-align: center;
+}
 .Card {
   margin: 0 auto;
   position: relative;
