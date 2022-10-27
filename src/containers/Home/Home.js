@@ -19,7 +19,6 @@ const Home = () => {
   };
   const submitIncome = (e) => {
     e.preventDefault();
-    console.log(incomeDate, moneyIncome);
     if (incomeDate === "" || moneyIncome === "") {
       return alert("please fill the input");
     }
@@ -28,7 +27,7 @@ const Home = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         date: incomeDate,
-        money_income: moneyIncome,
+        total_income: moneyIncome,
       }),
     });
     setMoneyIncome("");
@@ -61,8 +60,8 @@ const Home = () => {
   //-----------state---------
   const [showForm, setShowForm] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalSpending, setTotalSpending] = useState(0);
+  // const [totalIncome, setTotalIncome] = useState(0);
+  // const [totalSpending, setTotalSpending] = useState(0);
   const [incomeDate, setIncomeDate] = useState("");
   const [spendingDate, setSpendingDate] = useState("");
   const [spendingItem, setSpendingItem] = useState("");
@@ -129,7 +128,6 @@ const Home = () => {
 
   return (
     <div className={classes.App}>
-      <h1>Anda ingin mencatat apa Wahai User ?</h1>
       <button
         type="button"
         onClick={() => setShowForm(true)}

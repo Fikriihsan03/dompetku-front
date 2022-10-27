@@ -10,17 +10,16 @@ const IncomeLog = () => {
       });
   }, []);
   const parsedTotalIncome = incomeData.map((ha, i) => {
-    return Number(incomeData[i].money_income.split(".").splice(1, 2).join(""));
+    return Number(incomeData[i].total_income?.split(".").splice(1, 2).join(""));
   });
   const result = parsedTotalIncome.reduce((sum, number) => {
     let result = sum + number;
     return result;
   }, 0);
-
-  console.log(result);
   return (
     <>
       <h1>IncomeLog</h1>
+      {console.log(result)}
       {/* <div className="row"> */}
       <table style={{ textAlign: "center" }} className="row">
         <thead style={{ border: "1px solid black", fontSize: "20px" }}>
@@ -37,7 +36,7 @@ const IncomeLog = () => {
                   {incomeData[i].income_date}
                 </td>
                 <td className="col-sm-6 col-xs-6" style={{ marginTop: "10px" }}>
-                  {incomeData[i].money_income}
+                  {incomeData[i].total_income}
                 </td>
               </tr>
             );
