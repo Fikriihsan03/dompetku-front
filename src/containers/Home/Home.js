@@ -7,15 +7,9 @@ import DatePicker from "react-datepicker";
 
 const Home = () => {
   const dateFormatter = (date, type) => {
-    date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
     const formattedDate = date.toISOString().slice(0, 10).split("-").join("-");
-    if (type === "income") {
-      setIncomeDate(formattedDate);
-      setStartDate(date);
-    } else {
-      setSpendingDate(formattedDate);
-      setStartDate(date);
-    }
+    setDisplayDate(date);
+    return formattedDate;
   };
   const submitIncome = (e) => {
     e.preventDefault();
@@ -32,54 +26,43 @@ const Home = () => {
     });
     setMoneyIncome("");
   };
+
   const submitSpending = (e) => {
     e.preventDefault();
-    if (
-      spendingDate === "" ||
-      moneySpended === "" ||
-      spendingItem === "" ||
-      totalSpendingItem === ""
-    ) {
-      return alert("please fill the input");
+    if (Object.values(spendingData).some((props) => props === "")) {
+      return alert("Please Fill The Input");
     }
     fetch("http://localhost:3002/spending_log", {
       method: "post",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        date: spendingDate,
-        money_spended: moneySpended,
-        item_name: spendingItem,
-        total_items: totalSpendingItem,
-      }),
+      body: JSON.stringify(spendingData),
     });
-    setSpendingDate("");
-    setTotalMoneySpended("");
-    setSpendingItem("");
-    setTotalSpendingItem("");
+    setSpendingData({
+      date: new Date().toISOString().slice(0, 10).split("-").join("-"),
+      item_name: "",
+      total_items: "",
+      money_spended: "",
+    });
+    return alert("Your Spending Is Logged")
   };
   //-----------state---------
   const [showForm, setShowForm] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  // const [totalIncome, setTotalIncome] = useState(0);
-  // const [totalSpending, setTotalSpending] = useState(0);
+  const [displayDate, setDisplayDate] = useState(new Date());
+  const [spendingData, setSpendingData] = useState({
+    date: new Date().toISOString().slice(0, 10).split("-").join("-"),
+    item_name: "",
+    total_items: "",
+    money_spended: "",
+  });
   const [incomeDate, setIncomeDate] = useState("");
-  const [spendingDate, setSpendingDate] = useState("");
-  const [spendingItem, setSpendingItem] = useState("");
-  const [totalSpendingItem, setTotalSpendingItem] = useState("");
-  const [moneySpended, setTotalMoneySpended] = useState("");
   const [moneyIncome, setMoneyIncome] = useState("");
   //-----END-------
   let form = (
     <FormCard
+      spendingData={spendingData}
+      setSpendingData={setSpendingData}
       dateFormatter={dateFormatter}
-      spendingItem={spendingItem}
-      setSpendingItem={setSpendingItem}
-      totalSpendingItem={totalSpendingItem}
-      setTotalSpendingItem={setTotalSpendingItem}
-      moneySpended={moneySpended}
-      setTotalMoneySpended={setTotalMoneySpended}
-      startDate={startDate}
-      setStartDate={setStartDate}
+      displayDate={displayDate}
       submit={submitSpending}
       alignText={classes.AlignTextCenter}
       card={classes.Card}
@@ -101,7 +84,7 @@ const Home = () => {
                 name="tanggal"
                 className={classes.DateText}
                 dateFormat="dd/MM/YYY"
-                selected={startDate}
+                selected={displayDate}
                 onChange={(date) => dateFormatter(date, "income")}
               />
             </li>

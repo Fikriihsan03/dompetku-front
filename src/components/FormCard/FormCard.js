@@ -2,19 +2,16 @@ import NumberFormat from "react-number-format";
 import DatePicker from "react-datepicker";
 
 const FormCard = ({
-  spendingItem,
-  setSpendingItem,
-  totalSpendingItem,
-  setTotalSpendingItem,
-  moneySpended,
-  setTotalMoneySpended,
-  startDate,
+  spendingData,
+  setSpendingData,
+  displayDate,
   dateFormatter,
   alignText,
   card,
   submit,
   dateText,
 }) => {
+  let { item_name, total_item, money_spended } = spendingData;
   return (
     <div className={card} style={{ width: "18rem" }}>
       <div className="card-header">
@@ -29,8 +26,10 @@ const FormCard = ({
               name="tanggal"
               className={dateText}
               dateFormat="dd/MM/YYY"
-              selected={startDate}
-              onChange={(date) => dateFormatter(date, "spending")}
+              selected={displayDate}
+              onChange={(date) =>
+                setSpendingData({ ...spendingData, date: dateFormatter(date) })
+              }
             />
           </li>
           <li className="list-group-item">
@@ -39,8 +38,10 @@ const FormCard = ({
               type="text"
               name="item-name"
               className={alignText}
-              value={spendingItem}
-              onChange={(e) => setSpendingItem(e.target.value)}
+              value={item_name}
+              onChange={(e) =>
+                setSpendingData({ ...spendingData, item_name: e.target.value })
+              }
             />
           </li>
           <li className="list-group-item">
@@ -49,20 +50,30 @@ const FormCard = ({
               type="text"
               name="total-item"
               className={alignText}
-              value={totalSpendingItem}
-              onChange={(e) => setTotalSpendingItem(e.target.value)}
+              value={total_item}
+              onChange={(e) =>
+                setSpendingData({
+                  ...spendingData,
+                  total_items: e.target.value,
+                })
+              }
             />
           </li>
           <li className="list-group-item">
             <label htmlFor="total-price">Total Price : </label>
             <NumberFormat
-              value={moneySpended}
+              value={money_spended}
               name="total-price"
               className={alignText}
               thousandSeparator={"."}
               decimalSeparator={","}
               prefix={"Rp."}
-              onChange={(e) => setTotalMoneySpended(e.target.value)}
+              onChange={(e) =>
+                setSpendingData({
+                  ...spendingData,
+                  money_spended: e.target.value,
+                })
+              }
             />
           </li>
           <li className="list-group-item">
